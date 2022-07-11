@@ -5,3 +5,42 @@ Some typical uses of a DaemonSet are:
 running a cluster storage daemon on every node
 running a logs collection daemon on every node
 running a node monitoring daemon on every node
+
+
+
+ASSIGNMENT 2
+
+Go to the yaml.file or the deployment file and change relicaset =3 save changes
+kubectl apply -f deployment
+
+
+Assignment 3
+
+check the sevice and deployment
+kubectl get services
+and see whether app is exposed outside the cluster on NodePort 
+if it not exposed it will be exposed
+Taken from Deployments metadata, they will have some labels. These labels are what Service will match it's selector against (labels&selectors)
+therefore need Deployment (or Pod if you really want to go the "manual" way), that has something like following
+
+metadata:
+  labels:
+    app: myappname
+    
+followed by Service that has a selector defined similarly
+
+selector:
+  app: myappname
+  
+  *should see the service will now have active endpoints (assuming your pods are launched and in Ready state.
+
+Also, if you want to contain version in your labels, so that you can ie. target particular pod version with a service, or maybe use it for another reason like pod affinity, you should split it into two labels like
+
+metadata:
+  labels:
+    app: myappname
+    ver: v12
+    
+    
+    
+    
